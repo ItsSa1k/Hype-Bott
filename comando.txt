@@ -1,0 +1,40 @@
+if(comando === "warn") {
+    const Discord = require('discord.js');
+    const corvermelha = '#ff0000'
+    const corverde = '#26ff00'
+
+    const FaltaPermissaoCarai = new Discord.RichEmbed()
+    .setTitle("Você não tem permissão para executar este comando.")
+    .setAuthor(message.author.username, message.author.avatarURL)
+    .setColor(corvermelha)
+    .setDescription("É preciso ter permissão **MANAGE_MESSAGES** para usar.")
+    .setTimestamp();
+
+    const ArgumentosInvalidoPoxa = new Discord.RichEmbed()
+    .setColor(corvermelha)
+    .setTitle("Argumentos Invalidos")
+    .setDescription("Use: h!avisaars <User> <Motivo>")
+    .setAuthor(message.author.username, message.author.avatarURL)
+    .setTimestamp();
+
+
+  if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send(FaltaPermissaoCarai);
+  let mencao = message.mentions.users.first();  
+    if(!mencao) return message.channel.send(ArgumentosInvalidoPoxa);
+    let motivo = args.slice(1).join(' ')
+    if(!motivo) return message.channe.send(ArgumentosInvalidoPoxa);
+
+    var AvisandoUser = new Discord.RichEmbed()
+    .setColor(corverde)
+    .setAuthor(message.author.username, message.author.avatarURL)
+    .setTitle(`Você foi avisado em ${message.guild.name}`)
+    .addField('Avisado por', message.author.tag)
+    .addField('Motivo', motivo)
+    .setTimestamp();
+mencao.send(AvisandoUser);
+
+var SucessoAviso = new Discord.RichEmbed()
+        .setColor(corverde)
+        .setTitle(`O usuário ${mencao.tag} foi avisado com sucesso!`);
+    message.channel.send(SucessoAviso);
+}
